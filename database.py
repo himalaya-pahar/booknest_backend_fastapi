@@ -3,7 +3,12 @@ from sqlmodel import Field,Session,SQLModel,create_engine
 from fastapi import Depends
 from datetime import datetime,timezone
 
-DATABASE_URL = "postgresql://admin:rootpassword@localhost:5432/booknest_db"
+
+
+# DATABASE_URL = "postgresql://admin:rootpassword@localhost:5432/booknest_db"
+
+sqlite_file_name="database.db"
+DATABASE_URL=f"sqlite:///{sqlite_file_name}"
 
 engine=create_engine(DATABASE_URL)
 
