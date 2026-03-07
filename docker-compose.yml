@@ -15,7 +15,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
   
   api:
-    image: booknest-backend:3.0
+    image: booknest-backend:4.0
     container_name: booknest_fastapi
     ports:
       - "8000:8000"
