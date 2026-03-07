@@ -8,8 +8,7 @@ from datetime import datetime,timezone
 # DATABASE_URL = "postgresql://admin:rootpassword@localhost:5432/booknest_db"
 
 sqlite_file_name="database.db"
-DATABASE_URL=f"sqlite:///{sqlite_file_name}"
-
+DATABASE_URL=f"sqlite:///./{sqlite_file_name}"
 engine=create_engine(DATABASE_URL)
 
 def create_db_and_tables():
