@@ -9,6 +9,7 @@ from datetime import datetime,timezone
 
 sqlite_file_name="database.db"
 DATABASE_URL=f"sqlite:///./{sqlite_file_name}"
+
 engine=create_engine(DATABASE_URL)
 
 def create_db_and_tables():
