@@ -8,7 +8,7 @@ ACCESS_TIMEOUT_EXPIRE_MINUTES=30
 def create_access_token(data:dict,expires:timedelta|None=None):
     to_encode=data.copy()
     if expires:
-        expire=datetime.now(timezone.utc)+timedelta
+        expire=datetime.now(timezone.utc)+expires # changed timedelta to expires
     else:
         expire=datetime.now(timezone.utc)+timedelta(minutes=ACCESS_TIMEOUT_EXPIRE_MINUTES)
     to_encode.update({"exp":expire})

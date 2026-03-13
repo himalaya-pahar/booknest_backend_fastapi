@@ -28,3 +28,26 @@ def get_books(db:d_b.SessionDep,current_user=Depends(oauth2.get_current_user))->
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No book found")
     return books
 
+def get_all_books_in_system(
+    db: d_b.SessionDep, 
+    search_name: str | None = None,   
+    search_author: str | None = None  
+) -> list[schemas.ShowBook]:
+    
+    query = select(d_b.Book)
+
+    if search_name:
+        query = query.where(d_b.Book.name.contains(search_name))
+        
+    if search_author:
+        query = query.where(d_b.Book.author.contains(search_author))
+
+    books = db.exec(query).all()
+    
+    if not books:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            detail="No books found matching your search criteria"
+        )
+    
+    return books
