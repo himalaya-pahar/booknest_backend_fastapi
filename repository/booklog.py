@@ -48,18 +48,30 @@ def upd_pending_request(id:int,upd:str,db:d_b.SessionDep,current_user=Depends(oa
     if request.status=="accepted":
         raise HTTPException(status_code=status.HTTP_208_ALREADY_REPORTED,detail="Already accepted")
     
-    request.sqlmodel_update({"status":upd})
+
+    request.status=upd
+    db.add(request)
 
     if upd=="accepted":
         db.exec(delete(d_b.BookLog).where(d_b.BookLog.book_id==request.wanted_book))
         db.exec(delete(d_b.BookLog).where(d_b.BookLog.book_id==request.offered_book))
-        new_successful_swap_book=d_b.SuccessfulSwapHistory(user_1=request.grantor,user_2=request.grantor,book_1=request.wanted_book,book_2=request.offered_book)
+
+        new_successful_swap_book=d_b.SuccessfulSwapHistory(
+            user_1=request.grantor,
+            user_2=request.requestor,
+            book_1=request.wanted_book,
+            book_2=request.offered_book)
+        
+
         db.add(new_successful_swap_book)
         book_1=db.exec(select(d_b.Book).where(d_b.Book.id==request.wanted_book)).first()
         book_2=db.exec(select(d_b.Book).where(d_b.Book.id==request.offered_book)).first()
 
-        book_1.sqlmodel_update({"user_id":request.requestor})
-        book_2.sqlmodel_update({"user_id":request.grantor})
+        if book_1 and book_2:
+            book_1.user_id = request.requestor
+            book_2.user_id = request.grantor
+            db.add(book_1)
+            db.add(book_2)
 
     db.commit()
     return "updated"
