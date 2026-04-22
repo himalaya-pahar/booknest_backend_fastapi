@@ -39,7 +39,7 @@ class BookLog(SQLModel,table=True):
     author:str
     book_id:int=Field(foreign_key="book.id")
     user_id:int=Field(foreign_key="user.id")
-    date:datetime=Field(datetime.now())
+    date: datetime = Field(default_factory=datetime.now)
 
 class SuccessfulSwapHistory(SQLModel,table=True):
     id:int=Field(primary_key=True,index=True)
@@ -47,7 +47,7 @@ class SuccessfulSwapHistory(SQLModel,table=True):
     user_2:int=Field(foreign_key="user.id")
     book_1:int=Field(foreign_key="book.id")
     book_2:int=Field(foreign_key="book.id")
-    date:datetime=Field(datetime.now())
+    date: datetime = Field(default_factory=datetime.now)
 
 class Request(SQLModel,table=True):
     id:int=Field(primary_key=True,index=True)
@@ -55,7 +55,7 @@ class Request(SQLModel,table=True):
     grantor:int=Field(foreign_key="user.id")
     offered_book:int=Field(foreign_key="book.id")
     wanted_book:int=Field(foreign_key="book.id")
-    date:datetime=Field(datetime.now())
+    date: datetime = Field(default_factory=datetime.now)
     status:str
     
 
