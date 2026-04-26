@@ -25,3 +25,4 @@ class ShowBook(BaseModel):
     name: str
     author: str
     user_id: int
+    owner_name: str

@@ -34,24 +34,39 @@ def get_books(db:d_b.SessionDep,current_user=Depends(oauth2.get_current_user))->
 
 def get_all_books_in_system(
     db: d_b.SessionDep, 
-    search_name: str | None = None,   
-    search_author: str | None = None  
+    search_name: str | None = None, 
+    search_author: str | None = None
 ) -> list[schemas.ShowBook]:
     
-    query = select(d_b.Book)
+    # 1. The Magic JOIN! Select BOTH the Book and the User where their IDs match.
+    query = select(d_b.Book, d_b.User).where(d_b.Book.user_id == d_b.User.id)
 
+    # (Keep your search filters exactly the same)
     if search_name:
         query = query.where(d_b.Book.name.contains(search_name))
-        
     if search_author:
         query = query.where(d_b.Book.author.contains(search_author))
 
-    books = db.exec(query).all()
+    # 2. Execute the query
+    results = db.exec(query).all()
     
-    if not books:
+    if not results:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, 
             detail="No books found matching your search criteria"
         )
     
-    return books
+    # 3. Combine the Book data and User data together to send to the frontend
+    formatted_books =[]
+    for book, user in results:
+        formatted_books.append(
+            schemas.ShowBook(
+                id=book.id,
+                name=book.name,
+                author=book.author,
+                user_id=book.user_id,
+                owner_name=user.name  # <--- Here is the user's real name!
+            )
+        )
+    
+    return formatted_books
