@@ -17,10 +17,10 @@ def add_book(book:schemas.Book,db:d_b.SessionDep,current_user=Depends(oauth2.get
 
 @router.get('/all', response_model=List[schemas.ShowBook])
 def explore_all_books(db: d_b.SessionDep,
-                    name: Annotated[str | None, Query(description="Search books by title")] = None,
-                    author: Annotated[str | None, Query(description="Search books by author name")] = None
+                    q: Annotated[str | None, Query(description="Search by title or author")] = None,
+                    genre: Annotated[str | None, Query(description="Filter by genre")] = None
                     ,current_user=Depends(oauth2.get_current_user)):
-    return repo_book.get_all_books_in_system(db,search_name=name,search_author=author)
+    return repo_book.get_all_books_in_system(db, search_query=q, genre=genre)
 
 @router.get('/{id}')
 def get_one_book(id:int,db:d_b.SessionDep,current_user=Depends(oauth2.get_current_user))->schemas.Book:

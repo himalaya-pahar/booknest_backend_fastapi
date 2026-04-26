@@ -31,6 +31,7 @@ class Book(SQLModel,table=True):
     id:int=Field(primary_key=True,index=True)
     name:str
     author:str
+    genre:str = Field(default="Other")
     user_id:int=Field(foreign_key="user.id",index=True)
 
 class BookLog(SQLModel,table=True):

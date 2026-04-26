@@ -14,6 +14,7 @@ class ShowUser(BaseModel):
 class Book(BaseModel):
     name:str
     author:str
+    genre:str
 
 class BookLog(Book):
     id:int
@@ -24,5 +25,6 @@ class ShowBook(BaseModel):
     id: int
     name: str
     author: str
+    genre:str
     user_id: int
     owner_name: str
