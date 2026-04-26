@@ -19,3 +19,9 @@ class BookLog(Book):
     id:int
     user_id:int
     date:datetime
+
+class ShowBook(BaseModel):
+    id: int
+    name: str
+    author: str
+    user_id: int
