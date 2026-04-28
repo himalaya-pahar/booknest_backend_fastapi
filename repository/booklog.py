@@ -158,9 +158,7 @@ def get_detailed_history(db: d_b.SessionDep, current_user):
     return results
 
 def get_marketplace_logic(db: d_b.SessionDep, q: str | None = None, genre: str | None = None):
-    # 1. Join BookLog with User (to get owner name)
-    # We also join with the original Book table to get the Genre 
-    # (since BookLog doesn't store Genre, but Book does)
+    
     query = select(d_b.BookLog, d_b.User, d_b.Book).where(
         d_b.BookLog.user_id == d_b.User.id,
         d_b.BookLog.book_id == d_b.Book.id
