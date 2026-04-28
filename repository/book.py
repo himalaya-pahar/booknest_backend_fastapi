@@ -1,6 +1,7 @@
 from fastapi import HTTPException,status,Depends
 from sqlmodel import select
 from sqlmodel import select, or_
+from sqlmodel import delete
 import schemas,database as d_b
 from typing import List
 from security import oauth2
@@ -77,3 +78,20 @@ def get_all_books_in_system(
         )
     
     return formatted_books
+
+def delete_book(id: int, db: d_b.SessionDep, current_user):
+    # Find the book
+    book = db.exec(select(d_b.Book).where(d_b.Book.id == id)).first()
+    
+    if not book:
+        raise HTTPException(status_code=404, detail="Book not found")
+    if book.user_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Not authorized to delete this book")
+    
+    # Clean up: Remove from the marketplace (BookLog) if it was listed
+    db.exec(delete(d_b.BookLog).where(d_b.BookLog.book_id == id))
+    
+    # Finally, delete the book itself
+    db.delete(book)
+    db.commit()
+    return {"detail": "Book deleted successfully"}

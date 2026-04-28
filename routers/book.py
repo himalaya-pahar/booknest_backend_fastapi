@@ -27,5 +27,9 @@ def get_one_book(id:int,db:d_b.SessionDep,current_user=Depends(oauth2.get_curren
     return repo_book.get_book(id,db,current_user)
 
 @router.get('/')
-def get_book(db:d_b.SessionDep,current_user=Depends(oauth2.get_current_user))->List[schemas.Book]:
+def get_book(db:d_b.SessionDep,current_user=Depends(oauth2.get_current_user)):
     return repo_book.get_books(db,current_user)
+
+@router.delete('/{id}')
+def delete_book(id: int, db: d_b.SessionDep, current_user=Depends(oauth2.get_current_user)):
+    return repo_book.delete_book(id, db, current_user)

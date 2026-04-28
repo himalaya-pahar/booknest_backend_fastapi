@@ -5,6 +5,8 @@ from sqlmodel import select
 from typing import List
 from sqlmodel import delete
 from repository import booklog as repo_booklog
+from typing import Annotated
+from fastapi import Query
 
 router=APIRouter(
     prefix="/booklog",
@@ -28,7 +30,15 @@ def make_a_book_log(book_id:int,db:d_b.SessionDep,current_user=Depends(oauth2.ge
     return repo_booklog.make_a_book_log(book_id,db,current_user)
 
 @router.get('/')
-def show_log(db:d_b.SessionDep,current_user=Depends(oauth2.get_current_user))->List[schemas.BookLog]:
-    return repo_booklog.show_log(db)
+def show_log(
+    db: d_b.SessionDep, 
+    current_user=Depends(oauth2.get_current_user),
+    q: Annotated[str | None, Query()] = None,
+    genre: Annotated[str | None, Query()] = None
+):
+    return repo_booklog.get_marketplace_logic(db, q, genre)
 
 
+@router.get('/history/all')
+def get_history(db: d_b.SessionDep, current_user=Depends(oauth2.get_current_user)):
+    return repo_booklog.get_detailed_history(db, current_user)

@@ -26,6 +26,8 @@ class User(SQLModel,table=True):
     name:str
     email:str
     password:str
+    phone_no: str | None = None
+    address: str | None = None
 
 class Book(SQLModel,table=True):
     id:int=Field(primary_key=True,index=True)
@@ -58,7 +60,8 @@ class Request(SQLModel,table=True):
     wanted_book:int=Field(foreign_key="book.id")
     date: datetime = Field(default_factory=datetime.now)
     status:str
-    
+    requestor_confirmed: bool = Field(default=False)
+    grantor_confirmed: bool = Field(default=False)
 
 class Wishlist(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True, index=True)
