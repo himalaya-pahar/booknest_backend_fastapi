@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 import database as d_b,schemas
 from security import hashing
-from routers import user,authenticate,book,booklog
+from routers import user,authenticate,book,booklog,wishlist
 
 @asynccontextmanager
 async def lifespan(app:FastAPI):
@@ -33,4 +33,4 @@ app.include_router(user.router)
 app.include_router(authenticate.router)
 app.include_router(book.router)
 app.include_router(booklog.router)
-
+app.include_router(wishlist.router)

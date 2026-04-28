@@ -28,3 +28,17 @@ class ShowBook(BaseModel):
     genre:str
     user_id: int
     owner_name: str
+
+
+class WishlistCreate(BaseModel):
+    title: str
+    author: str
+    condition: str
+    user_id: int
+
+class ShowWishlist(BaseModel):
+    id: int
+    title: str
+    author: str
+    condition: str
+    user_id: int

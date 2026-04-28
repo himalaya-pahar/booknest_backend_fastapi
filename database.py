@@ -60,3 +60,10 @@ class Request(SQLModel,table=True):
     status:str
     
 
+class Wishlist(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True, index=True)
+    title: str
+    author: str
+    condition: str = Field(default="Any Condition")
+    user_id: int = Field(foreign_key="user.id", index=True)
+    date_added: datetime = Field(default_factory=datetime.now)

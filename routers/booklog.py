@@ -30,3 +30,5 @@ def make_a_book_log(book_id:int,db:d_b.SessionDep,current_user=Depends(oauth2.ge
 @router.get('/')
 def show_log(db:d_b.SessionDep,current_user=Depends(oauth2.get_current_user))->List[schemas.BookLog]:
     return repo_booklog.show_log(db)
+
+
