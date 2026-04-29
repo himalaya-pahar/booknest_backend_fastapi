@@ -2,10 +2,11 @@ from typing import Annotated
 from sqlmodel import Field,Session,SQLModel,create_engine
 from fastapi import Depends
 from datetime import datetime,timezone
+import os,dotenv
 
 
 
-DATABASE_URL = "postgresql://postgres.loruadiorctklowqdrli:cuetbooknest@aws-1-ap-northeast-1.pooler.supabase.com:5432/postgres"
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 # sqlite_file_name="database.db"
