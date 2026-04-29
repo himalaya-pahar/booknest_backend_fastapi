@@ -5,17 +5,21 @@ from datetime import datetime
 import os
 from dotenv import load_dotenv
 
-# Local dev-er jonno .env load korbe, Render environment variable section theke auto load hoy
+# Local development-er jonno .env load korbe. 
+# Render-e Dashboard Variable theke automatic os.getenv kaj kore.
 load_dotenv()
 
+# Render Dashboard-er Key name jeno 'DATABASE_URL' hoy
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-# --- MASTER FIX FOR RENDER & SUPABASE ---
-if DATABASE_URL is None:
-    # Eita logs-e clear error message dibe jeno tumi bujhte paro variable load hoy nai
-    raise ValueError("CRITICAL ERROR: DATABASE_URL not found! Check Render Environment Variables.")
+# --- MASTER FIX FOR DEPLOYMENT ---
+if not DATABASE_URL:
+    # Eita logs-e ashol message-ta dibe jeno tumi bujhte paro keno crash korche
+    print("CRITICAL: DATABASE_URL is missing in environment variables!")
+    # Crash handle korar jonno error raise kora holo
+    raise ValueError("DATABASE_URL environment variable is not set on Render.")
 
-# Supabase postgres:// ke postgresql:// e convert kora (SQLAlchemy requirement)
+# Supabase 'postgres://' ke 'postgresql://' e convert kora (SQLAlchemy requirement)
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
