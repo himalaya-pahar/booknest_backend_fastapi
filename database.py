@@ -2,8 +2,10 @@ from typing import Annotated
 from sqlmodel import Field,Session,SQLModel,create_engine
 from fastapi import Depends
 from datetime import datetime,timezone
-import os,dotenv
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 
 DATABASE_URL = os.getenv("DATABASE_URL")
