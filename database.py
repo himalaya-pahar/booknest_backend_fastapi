@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Render Dashboard-er Key name jeno 'DATABASE_URL' hoy
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("DATABASE")
 
 # --- MASTER FIX FOR DEPLOYMENT ---
 if not DATABASE_URL:
