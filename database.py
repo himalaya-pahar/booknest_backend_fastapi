@@ -1,20 +1,26 @@
 from typing import Annotated
-from sqlmodel import Field,Session,SQLModel,create_engine
+from sqlmodel import Field, Session, SQLModel, create_engine
 from fastapi import Depends
-from datetime import datetime,timezone
+from datetime import datetime
 import os
 from dotenv import load_dotenv
 
+# Local dev-er jonno .env load korbe, Render environment variable section theke auto load hoy
 load_dotenv()
-
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+# --- MASTER FIX FOR RENDER & SUPABASE ---
+if DATABASE_URL is None:
+    # Eita logs-e clear error message dibe jeno tumi bujhte paro variable load hoy nai
+    raise ValueError("CRITICAL ERROR: DATABASE_URL not found! Check Render Environment Variables.")
 
-# sqlite_file_name="database.db"
-# DATABASE_URL=f"sqlite:///./{sqlite_file_name}"
+# Supabase postgres:// ke postgresql:// e convert kora (SQLAlchemy requirement)
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
-engine=create_engine(DATABASE_URL)
+# Engine create kora
+engine = create_engine(DATABASE_URL)
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
@@ -23,47 +29,49 @@ def get_session():
     with Session(engine) as session:
         yield session
 
-SessionDep=Annotated[Session,Depends(get_session)]
+SessionDep = Annotated[Session, Depends(get_session)]
 
-class User(SQLModel,table=True):
-    id:int=Field(primary_key=True,index=True)
-    name:str
-    email:str
-    password:str
+# --- MODELS (Exactly as you provided) ---
+
+class User(SQLModel, table=True):
+    id: int = Field(default=None, primary_key=True, index=True)
+    name: str
+    email: str
+    password: str
     phone_no: str | None = None
     address: str | None = None
 
-class Book(SQLModel,table=True):
-    id:int=Field(primary_key=True,index=True)
-    name:str
-    author:str
-    genre:str = Field(default="Other")
-    user_id:int=Field(foreign_key="user.id",index=True)
+class Book(SQLModel, table=True):
+    id: int = Field(default=None, primary_key=True, index=True)
+    name: str
+    author: str
+    genre: str = Field(default="Other")
+    user_id: int = Field(foreign_key="user.id", index=True)
 
-class BookLog(SQLModel,table=True):
-    id:int=Field(primary_key=True,index=True)
-    name:str
-    author:str
-    book_id:int=Field(foreign_key="book.id")
-    user_id:int=Field(foreign_key="user.id")
+class BookLog(SQLModel, table=True):
+    id: int = Field(default=None, primary_key=True, index=True)
+    name: str
+    author: str
+    book_id: int = Field(foreign_key="book.id")
+    user_id: int = Field(foreign_key="user.id")
     date: datetime = Field(default_factory=datetime.now)
 
-class SuccessfulSwapHistory(SQLModel,table=True):
-    id:int=Field(primary_key=True,index=True)
-    user_1:int=Field(foreign_key="user.id")
-    user_2:int=Field(foreign_key="user.id")
-    book_1:int=Field(foreign_key="book.id")
-    book_2:int=Field(foreign_key="book.id")
+class SuccessfulSwapHistory(SQLModel, table=True):
+    id: int = Field(default=None, primary_key=True, index=True)
+    user_1: int = Field(foreign_key="user.id")
+    user_2: int = Field(foreign_key="user.id")
+    book_1: int = Field(foreign_key="book.id")
+    book_2: int = Field(foreign_key="book.id")
     date: datetime = Field(default_factory=datetime.now)
 
-class Request(SQLModel,table=True):
-    id:int=Field(primary_key=True,index=True)
-    requestor:int=Field(foreign_key="user.id")
-    grantor:int=Field(foreign_key="user.id")
-    offered_book:int=Field(foreign_key="book.id")
-    wanted_book:int=Field(foreign_key="book.id")
+class Request(SQLModel, table=True):
+    id: int = Field(default=None, primary_key=True, index=True)
+    requestor: int = Field(foreign_key="user.id")
+    grantor: int = Field(foreign_key="user.id")
+    offered_book: int = Field(foreign_key="book.id")
+    wanted_book: int = Field(foreign_key="book.id")
     date: datetime = Field(default_factory=datetime.now)
-    status:str
+    status: str
     requestor_confirmed: bool = Field(default=False)
     grantor_confirmed: bool = Field(default=False)
 
