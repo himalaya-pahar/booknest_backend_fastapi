@@ -86,3 +86,6 @@ class Wishlist(SQLModel, table=True):
     condition: str = Field(default="Any Condition")
     user_id: int = Field(foreign_key="user.id", index=True)
     date_added: datetime = Field(default_factory=datetime.now)
+
+
+    
