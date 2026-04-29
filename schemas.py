@@ -46,7 +46,6 @@ class WishlistCreate(BaseModel):
     title: str
     author: str
     condition: str
-    user_id: int
 
 class ShowWishlist(BaseModel):
     id: int
