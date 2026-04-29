@@ -5,7 +5,8 @@ from datetime import datetime,timezone
 
 
 
-DATABASE_URL = "postgresql://postgres:cuetbooknest@db.loruadiorctklowqdrli.supabase.co:5432/postgres"
+DATABASE_URL = "postgresql://postgres.loruadiorctklowqdrli:cuetbooknest@aws-1-ap-northeast-1.pooler.supabase.com:5432/postgres"
+
 
 # sqlite_file_name="database.db"
 # DATABASE_URL=f"sqlite:///./{sqlite_file_name}"
