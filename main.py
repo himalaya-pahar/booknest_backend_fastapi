@@ -45,4 +45,8 @@ def get_booknest_stats(session: d_b.SessionDep):
         "books": total_books,
         "readers": total_users,
         "genres": unique_genres
+<<<<<<< HEAD
     }
+=======
+    }
+>>>>>>> ba605ea (database convert to PostgreSQL)
