@@ -5,7 +5,7 @@ from security import oauth2
 from repository import wishlist as repo_wishlist
 
 router = APIRouter(
-    prefix="/wishlist", # The base URL will be http://127.0.0.1:8000/wishlist/
+    prefix="/wishlist",
     tags=["Wishlist"]
 )
 

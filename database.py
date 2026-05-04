@@ -1,7 +1,7 @@
 from typing import Annotated
 from sqlmodel import Field, Session, SQLModel, create_engine
 from fastapi import Depends
-from datetime import datetime
+from datetime import datetime,timezone
 import os
 from dotenv import load_dotenv
 
@@ -88,4 +88,11 @@ class Wishlist(SQLModel, table=True):
     date_added: datetime = Field(default_factory=datetime.now)
 
 
-    
+class ChatMessege(SQLModel,table=True):
+    id:int |None = Field(default=None,primary_key=True,index=True)
+    request_id:int =Field(foreign_key="request.id",index=True)
+    sender_id:int=Field(foreign_key="user.id")
+    receiver_id:int=Field(foreign_key="user.id")
+    content:str
+    timestamp:datetime=Field(default_factory=lambda: datetime.now(timezone.utc))
+    is_read:bool=Field(default=False)
