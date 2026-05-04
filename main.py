@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 import database as d_b
-from routers import user,authenticate,book,booklog,wishlist,websocket,stats
+from routers import user,authenticate,book,booklog,wishlist,websocket,stats,messages
 
 @asynccontextmanager
 async def lifespan(app:FastAPI):
@@ -29,3 +29,4 @@ app.include_router(booklog.router)
 app.include_router(wishlist.router)
 app.include_router(websocket.router)
 app.include_router(stats.router)
+app.include_router(messages.router)

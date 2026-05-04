@@ -1,7 +1,8 @@
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from sqlmodel import Session
-from database import engine, ChatMessage, manager
+from database import engine, ChatMessage
 from connectionManager import ConnectionManager
+manager = ConnectionManager()
 
 router = APIRouter(
     prefix="/ws",
@@ -51,6 +52,3 @@ async def websocket_endpoint(websocket: WebSocket, user_id: int):
             # Handle unexpected errors and ensure the user is disconnected
             print(f"Error in WebSocket: {e}")
             manager.disconnect(user_id)
-
-
-manager = ConnectionManager()

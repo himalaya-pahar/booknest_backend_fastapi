@@ -88,7 +88,7 @@ class Wishlist(SQLModel, table=True):
     date_added: datetime = Field(default_factory=datetime.now)
 
 
-class ChatMessege(SQLModel,table=True):
+class ChatMessage(SQLModel,table=True):
     id:int |None = Field(default=None,primary_key=True,index=True)
     request_id:int =Field(foreign_key="request.id",index=True)
     sender_id:int=Field(foreign_key="user.id")

@@ -2,7 +2,7 @@ from sqlmodel import func,select
 import database as d_b
 from fastapi import APIRouter
 
-router= APIRouter
+router= APIRouter()
 
 @router.get("/api/booknest-stats")
 def get_booknest_stats(session: d_b.SessionDep):
