@@ -1,10 +1,10 @@
-# 📚 BookNest — Backend API
+# BookNest — Backend API
 
 A **FastAPI** backend for **BookNest**, a platform where users can list, discover, and swap books with each other. Features include book management, swap request workflows, wishlists, real-time chat via WebSockets, and user stats.
 
 ---
 
-## 🚀 Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -18,7 +18,7 @@ A **FastAPI** backend for **BookNest**, a platform where users can list, discove
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 booknest_backend_fastapi/
@@ -56,7 +56,7 @@ booknest_backend_fastapi/
 
 ---
 
-## 🗄️ Database Models
+## Database Models
 
 | Model | Description |
 |---|---|
@@ -72,19 +72,19 @@ booknest_backend_fastapi/
 
 ## 🔌 API Endpoints
 
-### 🔐 Auth — `/`
+### Auth — `/`
 | Method | Path | Description |
 |---|---|---|
 | POST | `/login` | Authenticate and receive JWT token |
 
-### 👤 Users — `/user`
+### Users — `/user`
 | Method | Path | Description |
 |---|---|---|
 | POST | `/user/` | Register a new user |
 | GET | `/user/` | Get current user profile |
 | PUT | `/user/` | Update profile (name, phone, address) |
 
-### 📖 Books — `/book`
+### Books — `/book`
 | Method | Path | Description |
 |---|---|---|
 | POST | `/book/` | Add a new book listing |
@@ -93,7 +93,7 @@ booknest_backend_fastapi/
 | GET | `/book/{id}` | Get a specific book by ID |
 | DELETE | `/book/{id}` | Delete a book listing |
 
-### 🔁 Book Logs & Swaps — `/booklog`
+### Book Logs & Swaps — `/booklog`
 | Method | Path | Description |
 |---|---|---|
 | POST | `/booklog/{book_id}` | Create a book log entry |
@@ -103,24 +103,24 @@ booknest_backend_fastapi/
 | GET | `/booklog/request` | View pending requests |
 | PUT | `/booklog/request/{id}` | Accept or decline a swap request |
 
-### ❤️ Wishlist — `/wishlist`
+### Wishlist — `/wishlist`
 | Method | Path | Description |
 |---|---|---|
 | POST | `/wishlist/` | Add a book to wishlist |
 | GET | `/wishlist/` | Get user's wishlist |
 | DELETE | `/wishlist/{id}` | Remove item from wishlist |
 
-### 💬 Messages — `/messages`
+### Messages — `/messages`
 | Method | Path | Description |
 |---|---|---|
 | GET | `/messages/{request_id}` | Get chat history for a swap request |
 
-### 📊 Stats — `/stats`
+### Stats — `/stats`
 | Method | Path | Description |
 |---|---|---|
 | GET | `/stats/` | Get stats for the current user |
 
-### 🔴 WebSocket — `/ws`
+### WebSocket — `/ws`
 | Type | Path | Description |
 |---|---|---|
 | WS | `/ws/{user_id}` | Real-time bidirectional chat |
