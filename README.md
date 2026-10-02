@@ -70,7 +70,7 @@ booknest_backend_fastapi/
 
 ---
 
-## 🔌 API Endpoints
+## API Endpoints
 
 ### Auth — `/`
 | Method | Path | Description |
