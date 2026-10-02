@@ -136,7 +136,7 @@ booknest_backend_fastapi/
 
 ---
 
-## ⚙️ Setup & Running Locally
+## Setup & Running Locally
 
 ### Prerequisites
 - Python 3.11+
@@ -174,7 +174,7 @@ Interactive docs at `http://localhost:8000/docs`.
 
 ---
 
-## 🐳 Running with Docker
+## Running with Docker
 
 ```bash
 # Build and start
@@ -188,7 +188,7 @@ The server will be available at `http://localhost:8000`.
 
 ---
 
-## 🔒 Authentication
+## Authentication
 
 This API uses **JWT Bearer tokens**.
 
@@ -201,13 +201,13 @@ This API uses **JWT Bearer tokens**.
 
 ---
 
-## 🌐 CORS
+## CORS
 
 CORS is configured to allow **all origins** (`*`) for development. Update `allow_origins` in `main.py` before going to production.
 
 ---
 
-## ☁️ Deployment
+## Deployment
 
 This project is designed for deployment on **[Render](https://render.com)**:
 
